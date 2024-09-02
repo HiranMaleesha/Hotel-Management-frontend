@@ -1,0 +1,156 @@
+General Styling
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fc;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Container for user details page */
+  .user-details-container {
+    max-width: 90%;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* Header Styling */
+  h1 {
+    color: #4e73df;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  
+  .search-add-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    max-width: 600px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px; /* Add space below search bar */
+    font-size: 16px;
+  }
+  
+  .search-btn {
+    padding: 12px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4e73df;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px; /* Add space below search button */
+  }
+  
+  .search-btn:hover {
+    background-color: #2e59d9;
+  }
+  
+  .add-user-container {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    width: 100%;
+  }
+  
+  .add-user-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 240px; /* Increase the width to make the button longer */
+    padding: 12px 30px; /* Increase padding for better appearance */
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    background-color: #28a745;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-user-btn::before {
+    content: "+";
+    margin-right: 8px; /* Space between the + sign and button text */
+    font-size: 20px;
+    line-height: 1;
+  }
+  
+  .add-user-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* User List */
+  .user-list {
+    margin-top: 30px;
+  }
+  
+  .volunteer-card {
+    background-color: #f7f9fc;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .volunteer-card h2 {
+    color: #4e73df;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .volunteer-card p {
+    margin: 12px 0;
+    font-size: 16px;
+    color: #5a5c69;
+  }
+  
+  .volunteer-card p strong {
+    color: #6c757d;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start */
+    gap: 15px; /* Space between the buttons */
+    margin-top: 20px;
+  }
+  
+  .update-btn, .delete-btn {
+    padding: 10px 18px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .update-btn {
+    background-color: #1cc88a;
+    color: #ffffff;
+  }
+  
+  .update-btn:hover {
+    background-color: #17a673;
+  }
+  
+  .delete-btn {
+    background-color: #e74a3b;
+    color: #ffffff;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
