@@ -67,7 +67,7 @@ function Home() {
 
       {noResults ? (
         <div>
-          <p>No Users Found</p>
+          <p>No Halls Found</p>
         </div>
       ) : (
         <div className="user-list">
