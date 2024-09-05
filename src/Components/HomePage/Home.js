@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import User from "../Halls/Halls";
+import Halls from "../Halls/Halls";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
@@ -52,7 +52,7 @@ function Home() {
           onChange={(e) => setSearchQuery(e.target.value)}
           type="text"
           name="search"
-          placeholder="Search User details"
+          placeholder="Search Hall details"
         />
         <button className="search-btn" onClick={handleSearch}>
           Search
@@ -71,7 +71,7 @@ function Home() {
         </div>
       ) : (
         <div className="user-list">
-          {users && users.map((user, i) => <User key={i} user={user} />)}
+          {users && users.map((user, i) => <Halls key={i} user={user} />)}
         </div>
       )}
     </div>

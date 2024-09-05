@@ -3,18 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AddHalls.css'
 
-
 function AddHalls() {
-
   const history = useNavigate();
   const [inputs, setInputs] = useState({
     Hall_Name: "",
     Capacity: "",
     Location: "",
     Price: "",
-    Photos:"",
-    Hall_Type: "" 
+    Hall_Type: ""
   });
+  const [file, setFile] = useState(null);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -23,27 +21,33 @@ function AddHalls() {
     }));
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    await sendRequest();
-    window.alert("User added successfully!");
-    history('/userdetails');
-  }
+    const formData = new FormData();
+    formData.append('Hall_Name', inputs.Hall_Name);
+    formData.append('Capacity', inputs.Capacity);
+    formData.append('Location', inputs.Location);
+    formData.append('Price', inputs.Price);
+    formData.append('Hall_Type', inputs.Hall_Type);
+    formData.append('Photos', file);
 
-  const sendRequest = async () => {
-    await axios.post("http://localhost:4000/users",
-      {
-        Hall_Name: String(inputs.Hall_Name),
-        Capacity: String(inputs.Capacity),
-        Location: String(inputs.Location),
-        Price: String(inputs.Price),
-        Photos: String(inputs.Photos),
-        Hall_Type: String(inputs.Hall_Type) 
-      }
-    ).then(res => res.data);
+    try {
+      await axios.post("http://localhost:4000/users", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      window.alert("Hall added successfully!");
+      history('/userdetails');
+    } catch (error) {
+      console.error("Error adding hall:", error);
+      window.alert("Error adding hall. Please try again.");
+    }
   }
-
   return (
     <div className="modal-overlay">
       <div className="modal-container">
@@ -63,7 +67,7 @@ function AddHalls() {
           <input type="text" name="Price" onChange={handleChange} value={inputs.Price} required />
 
           <label>Photos:</label>
-          <input type="text" name="Photos" onChange={handleChange} value={inputs.Photos} required />
+          <input type="file" name="Photos" onChange={handleFileChange} required />
 
           <label>Hall Type:</label>
           <select name="Hall_Type" onChange={handleChange} value={inputs.Hall_Type} required>

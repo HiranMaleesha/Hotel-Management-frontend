@@ -12,6 +12,7 @@ function UpdateUser() {
     Photos: "",
     Hall_Type: "",
   });
+  const [selectedImage, setSelectedImage] = useState(null); // Handle image preview
   const history = useNavigate();
   const { id } = useParams();
 
@@ -28,14 +29,22 @@ function UpdateUser() {
   }, [id]);
 
   const sendRequest = async () => {
+    const formData = new FormData();
+    formData.append("Hall_Name", inputs.Hall_Name);
+    formData.append("Capacity", inputs.Capacity);
+    formData.append("Location", inputs.Location);
+    formData.append("Price", inputs.Price);
+    formData.append("Hall_Type", inputs.Hall_Type);
+
+    if (selectedImage) {
+      formData.append("Photos", selectedImage); // Send the image file
+    }
+
     try {
-      await axios.put(`http://localhost:4000/users/${id}`, {
-        Hall_Name: String(inputs.Hall_Name),
-        Capacity: String(inputs.Capacity),
-        Location: String(inputs.Location),
-        Price: String(inputs.Price),
-        Photos: String(inputs.Photos),
-        Hall_Type: String(inputs.Hall_Type) 
+      await axios.put(`http://localhost:4000/users/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
     } catch (error) {
       console.error("Error updating hall data:", error);
@@ -49,6 +58,10 @@ function UpdateUser() {
     }));
   };
 
+  const handleImageChange = (e) => {
+    setSelectedImage(e.target.files[0]); // Set selected image
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await sendRequest();
@@ -59,27 +72,69 @@ function UpdateUser() {
   return (
     <div className="modal-overlay">
       <div className="modal-container">
-        <h1>Add Hall</h1>
+        <h1>Update Hall Details</h1>
 
         <form onSubmit={handleSubmit} className="form">
           <label>Hall Name:</label>
-          <input type="text" name="Hall_Name" onChange={handleChange} value={inputs.Hall_Name} required />
+          <input
+            type="text"
+            name="Hall_Name"
+            onChange={handleChange}
+            value={inputs.Hall_Name}
+            required
+          />
 
           <label>Capacity:</label>
-          <input type="text" name="Capacity" onChange={handleChange} value={inputs.Capacity} required />
+          <input
+            type="text"
+            name="Capacity"
+            onChange={handleChange}
+            value={inputs.Capacity}
+            required
+          />
 
           <label>Location:</label>
-          <input type="text" name="Location" onChange={handleChange} value={inputs.Location} required />
+          <input
+            type="text"
+            name="Location"
+            onChange={handleChange}
+            value={inputs.Location}
+            required
+          />
 
           <label>Price:</label>
-          <input type="text" name="Price" onChange={handleChange} value={inputs.Price} required />
+          <input
+            type="text"
+            name="Price"
+            onChange={handleChange}
+            value={inputs.Price}
+            required
+          />
 
-          <label>Photos:</label>
-          <input type="text" name="Photos" onChange={handleChange} value={inputs.Photos} required />
+          <label>Photos (Upload New Image):</label>
+          <input type="file" name="Photos" onChange={handleImageChange} />
+
+          {/* Image preview */}
+          {selectedImage && (
+            <div className="image-preview">
+              <img
+                src={URL.createObjectURL(selectedImage)}
+                alt="Selected"
+                className="preview-img"
+              />
+            </div>
+          )}
 
           <label>Hall Type:</label>
-          <select name="Hall_Type" onChange={handleChange} value={inputs.Hall_Type} required>
-            <option value="" disabled>Select the hall type</option>
+          <select
+            name="Hall_Type"
+            onChange={handleChange}
+            value={inputs.Hall_Type}
+            required
+          >
+            <option value="" disabled>
+              Select the hall type
+            </option>
             <option value="Banquet">Banquet</option>
             <option value="Conference">Conference</option>
             <option value="Meeting Room">Meeting Room</option>
