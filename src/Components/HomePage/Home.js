@@ -9,11 +9,11 @@ const URL = "http://localhost:4000/users";
 const fetchHandler = async () => {
   try {
     const response = await axios.get(URL);
-    console.log('Data fetched:', response.data); // Log the data fetched
+    console.log('Data fetched:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching data:', error); // Log any errors
-    return { users: [] }; // Return an empty array to avoid undefined errors
+    console.error('Error fetching data:', error);
+    return { users: [] };
   }
 };
 
@@ -26,9 +26,9 @@ function Home() {
 
   useEffect(() => {
     fetchHandler().then((data) => {
-      setUsers(data.users || []); // Use an empty array if data.users is undefined
+      setUsers(data.users || []);
     });
-  }, []); // Empty dependency array to fetch data only on component mount
+  }, []);
 
   const handleSearch = () => {
     const filteredUsers = users.filter((user) =>
@@ -44,6 +44,23 @@ function Home() {
     navigate("/adduser");
   };
 
+    const handleGenerateReport = async () => {
+    try {
+      const response = await axios.get(`${URL}/report`, { responseType: 'blob' });
+      const blob = new Blob([response.data], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'halls_report.csv');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error generating report:', error);
+      alert('Error generating report. Please try again.');
+    }
+  };
   return (
     <div className="user-details-container">
       <h1>Details About Halls</h1>
@@ -61,6 +78,9 @@ function Home() {
         <div className="add-user-container">
           <button className="add-user-btn" onClick={handleAddUserClick}>
             Add New Hall
+          </button>
+          <button className="generate-report-btn" onClick={handleGenerateReport}>
+          🗒️ Generate Report
           </button>
         </div>
       </div>
